@@ -1,0 +1,17 @@
+{
+  "name": "node-generate-pdf-puppeteer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^5.5.0",
+    "puppeteer-core": "^5.5.0"
+  }
+}
