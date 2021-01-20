@@ -5,7 +5,7 @@ npm i puppeteer
 
 npm i puppeteer-core //sino se requiere descargar el navegador, usando el navegador existente o remoto
 
-diferencias puppeteer vs puppeteer-core  https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#puppeteer-vs-puppeteer-core
+(diferencias puppeteer vs puppeteer-core)[https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#puppeteer-vs-puppeteer-core]
 ### puppeteer
 descarga chromium y pesa 154MB
 
