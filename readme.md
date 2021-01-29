@@ -14,3 +14,6 @@ descarga chromium y pesa 154MB
 https://github.com/puppeteer/puppeteer/tree/main
 
 ( function(){...} )() //funciones que son invocadas inmediatamente
+
+create social using puppeteer
+https://eunjae.dev/post/create-social-image-using-puppeteer

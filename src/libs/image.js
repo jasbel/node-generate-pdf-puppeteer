@@ -24,8 +24,7 @@ const imgChartGenerate = async ( imgData = defaultImgData ) => {
     const { urlHtmlImage, nameImage, user, extensionType, numberImage } = imgData;
 
     const numberImg = numberImage || Math.floor((Math.random() * 100) + 1);
-    const urlImage = `./generate/imgs/${nameImage}-${user}-${numberImg}.${extensionType}`;
-    console.log(urlImage);
+    const urlImage = `./src/generate/imgs/${nameImage}-${user}-${numberImg}.${extensionType}`;
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();

@@ -1,10 +1,15 @@
 //documentation:  https://github.com/puppeteer/puppeteer
 const express = require('express');
 const app = express();
-const { imgGenerate, imgChartGenerate } = require('./src/image');
-const pdfGenerate = require("./src/pdf");
-const port = 3000
+const { imgGenerate, imgChartGenerate } = require('./libs/image');
+const pdfGenerate = require("./libs/pdf");
+const port = 3000;
 
+/** Setting */
+app.set('port', port);
+// app.set('views', path.join(__dirname, 'views'))
+
+/** API */
 //TODO: averiguar porque async-await me esta ayudando
 app.get('/', async (req, res) => {
     res.send('Home Principal')
@@ -32,6 +37,4 @@ app.get('/api/generate-img-chart/', async (req, res) => {
     res.send('Generate Image Chart JS...')
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-});
+module.exports = app;
