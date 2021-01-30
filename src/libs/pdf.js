@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 const { imgChartGenerate } = require("./image");
 
 const defaultPDFData = {
-    urlHtml : "http://localhost:3000/",
+    urlHtml : "http://localhost:3000/generate-html-chart",
     namePDF : "chart",
     user : 'user',
     sizePDF : "A4",

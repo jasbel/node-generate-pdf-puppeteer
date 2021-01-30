@@ -1,40 +1,26 @@
 //documentation:  https://github.com/puppeteer/puppeteer
 const express = require('express');
+const path = require('path');
 const app = express();
-const { imgGenerate, imgChartGenerate } = require('./libs/image');
-const pdfGenerate = require("./libs/pdf");
+const expHbs = require('express-handlebars');
 const port = 3000;
 
 /** Setting */
 app.set('port', port);
-// app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, 'views'));
+app.engine('.hbs', expHbs({
+    layoutsDir: path.join(app.get('views'), 'layouts'),
+    partialsDir: path.join(app.get('views'), 'partials'),
+    defaultLayout: 'main',
+    extname: '.hbs',
+    helpers: require('./libs/handlebars'),
+}))
+app.set('view engine', '.hbs');
 
 /** API */
-//TODO: averiguar porque async-await me esta ayudando
-app.get('/', async (req, res) => {
-    res.send('Home Principal')
-})
+app.use(require('./routes/pdf.route'));
 
-app.get('/api/generate-pdf/', async (req, res) => {
-    // await imageGenerate();
-    await pdfGenerate();
-    res.send('PDF generado correctamente')
-})
-
-app.get('/api/generate-chart/', async (req, res) => {
-    await imgGenerate();
-    res.send('Generate Image Chart JS')
-})
-
-app.get('/api/generate-img-chart/', async (req, res) => {
-    const data = {
-        urlHtmlImage :'https://duckduckgo.com/',
-        nameImage : 'images',
-        user : 'user',
-        extensionType : 'png',
-    }
-    await imgChartGenerate(data);
-    res.send('Generate Image Chart JS...')
-})
+/** Static Files */
+app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;
