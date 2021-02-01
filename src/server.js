@@ -17,6 +17,10 @@ app.engine('.hbs', expHbs({
 }))
 app.set('view engine', '.hbs');
 
+/** Middlewares */
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
 /** API */
 app.use(require('./routes/pdf.route'));
 

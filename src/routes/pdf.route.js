@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const { pdfCreate, chartCreate } = require('../controllers/pdf.controller');
+const { /* getPdfCreate, */ pdfCreate, chartCreate, htmlCreate } = require('../controllers/pdf.controller');
 
 const router = Router();
 
@@ -15,16 +15,10 @@ router.get('/', async (req, res) => {
     res.send('Home Principal')
 })
 
-router.get('/generate-html-chart',async (req, res) => {
-    const dataChart = {
-        title: "Titulo del Chart",
-        maxValue: 321,
-        minValue: 23
-    }
-    res.render('view-pdf', { dataChart })
-})
+router.get('/generate-html-chart', htmlCreate)
 
-router.get('/api/generate-pdf', pdfCreate);
+// router.get('/api/generate-pdf', getPdfCreate);
+router.post('/api/generate-pdf', pdfCreate);
 
 router.get('/api/generate-img-chart', chartCreate);
 
