@@ -50,6 +50,9 @@ const htmlContentForPDF = (dataChart) => {
         borderWidth = _borderWidth
     } = dataChart;
 
+    const stylesCDN = /* html */`
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    `
     const styles = /* css */`
         
         table,
@@ -160,7 +163,7 @@ const htmlContentForPDF = (dataChart) => {
                 legend: {
                     position: 'bottom',
                     labels: {
-                        fontColor: 'red',
+                        // fontColor: 'red',
                         fontSize: 14,
                         fontStyle: 700
                     }
@@ -212,6 +215,8 @@ const htmlContentForPDF = (dataChart) => {
     `
 
     return /* html */ `
+        ${stylesCDN}
+
         <style>
             ${styles}
         </style>
