@@ -15,6 +15,11 @@ const defaultDataChart = {
     borderWidth : 4
 }
 
+const maxArrayValue = (dataArr) => {
+    const maxValue = Math.max.apply(null, dataArr);
+    return maxValue;
+}
+
 const htmlContentForPDF = (dataChart) => {
     // Valores por defecto
     const {
@@ -54,7 +59,7 @@ const htmlContentForPDF = (dataChart) => {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     `
     const styles = /* css */`
-        
+
         table,
         td {
             border: 1px solid #333;
@@ -85,12 +90,18 @@ const htmlContentForPDF = (dataChart) => {
     //TODO: Cambiar la estructuracion y averiguar como unir dataX y dataY como objetos dentro de array ex: [{313,3123},{543, 4324},...]
     const concatDataTable = (accumulator, currentValue) => accumulator +
     `<tr>
-        <td>${currentValue}</td>
-        <td>${currentValue}</td>
+        <td>${currentValue[0]}</td>
+        <td>${currentValue[1]}</td>
     </tr>
     `;
 
-    const dataXY = dataX;
+    let dataXY = [];
+    if (dataX.length === dataY.length) {
+        for (const i in dataX) {
+            dataXY[i] = [ dataX[i], dataY[i] ];
+        }
+    };
+
     const valuesHtmlDataTable =  dataXY.reduce(concatDataTable, '');
 
     const mainHTML = /* html */ `
