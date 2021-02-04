@@ -1,13 +1,14 @@
-// CHART
+/** Plantilla para generar el archivo PDF
+ * 
+ */
+
+/** Datos por defecto de Chart */
 const defaultDataChart = {
     title: "Titulo por Defecto",
-    maxValue: 1000,
-    minValue: 100,
     dataX : [12, 14, 16, 18, 20, 22],
     dataY : [10, 9, 15, 5, 22, 2],
-    minY : 4,
-    maxY : 40,
-    stepY : 10,
+    difY: 4,
+    stepY : 5,
     titleGraphic : '',
     titleLegend : 'Titulo de Leyenda',
     bgColor : 'rgba(66, 134, 244, 1)',
@@ -15,21 +16,28 @@ const defaultDataChart = {
     borderWidth : 4
 }
 
+/** Funcion que devuelve el valor maximo de un conjunto de valores */
 const maxArrayValue = (dataArr) => {
     const maxValue = Math.max.apply(null, dataArr);
+    console.log("Max Value: ", maxValue);
     return maxValue;
 }
 
+/** Funcion que devuelve el valor minimo de un conjunto de valores */
+const minArrayValue = (dataArr) => {
+    const minValue = Math.min.apply(null, dataArr);
+    console.log("Min Value: ", minValue);
+    return minValue;
+}
+
+/** Contenido del template del PDF */
 const htmlContentForPDF = (dataChart) => {
     // Valores por defecto
     const {
         title: _title,
-        maxValue: _maxValue,
-        minValue: _minValue,
         dataX: _dataX,
         dataY: _dataY,
-        minY: _minY,
-        maxY: _maxY,
+        difY: _difY,
         stepY: _stepY,
         titleGraphic: _titleGraphic,
         titleLegend: _titleLegend,
@@ -38,15 +46,12 @@ const htmlContentForPDF = (dataChart) => {
         borderWidth: _borderWidth,
     } = defaultDataChart;
 
-    // Valores de los datos de chart
+    // Valores del Chart
     const {
         title = _title,
-        maxValue = _maxValue,
-        minValue = _minValue,
         dataX = _dataX,
         dataY = _dataY,
-        minY = _minY,
-        maxY = _maxY,
+        difY = _difY,
         stepY = _stepY,
         titleGraphic = _titleGraphic,
         titleLegend = _titleLegend,
@@ -54,6 +59,12 @@ const htmlContentForPDF = (dataChart) => {
         borderColor = _borderColor,
         borderWidth = _borderWidth
     } = dataChart;
+
+    const maxValue = maxArrayValue(dataY);
+    const minValue = minArrayValue(dataY);
+
+    const minY = maxValue + difY;
+    const maxY = minValue - difY;
 
     const stylesCDN = /* html */`
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
@@ -87,21 +98,18 @@ const htmlContentForPDF = (dataChart) => {
         }
     `;
 
-    //TODO: Cambiar la estructuracion y averiguar como unir dataX y dataY como objetos dentro de array ex: [{313,3123},{543, 4324},...]
+    let dataXY = [];
     const concatDataTable = (accumulator, currentValue) => accumulator +
     `<tr>
         <td>${currentValue[0]}</td>
         <td>${currentValue[1]}</td>
     </tr>
     `;
-
-    let dataXY = [];
     if (dataX.length === dataY.length) {
         for (const i in dataX) {
             dataXY[i] = [ dataX[i], dataY[i] ];
         }
     };
-
     const valuesHtmlDataTable =  dataXY.reduce(concatDataTable, '');
 
     const mainHTML = /* html */ `
@@ -227,7 +235,6 @@ const htmlContentForPDF = (dataChart) => {
 
     return /* html */ `
         ${stylesCDN}
-
         <style>
             ${styles}
         </style>
@@ -235,11 +242,11 @@ const htmlContentForPDF = (dataChart) => {
         ${mainHTML}
 
         ${scriptCDN}
-        
         <script>
             ${scriptChart}
         </script>
 
     `;
 };
+
 module.exports = htmlContentForPDF;
